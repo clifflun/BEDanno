@@ -1,12 +1,12 @@
 
 ## 🧬 Structural Variant Annotation Pipeline
 
-This repository includes a Bash script `annotate_sv.sh` for annotating structural variant (SV) breakpoints with multiple curated and population databases.
+This repository includes a Bash script `BEDanno.sh` for annotating structural variant (SV) breakpoints with multiple curated and population databases.
 
 ### 🔧 Usage
 
 ```bash
-./annotate_sv.sh -i INPUT_FILE -o OUTPUT_FILE [-v hg19|hg38]
+./BEDanno.sh -i INPUT_FILE -o OUTPUT_FILE [-v hg19|hg38]
 ```
 
 - `-i`: Path to the input file (required)
