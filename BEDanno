@@ -52,20 +52,14 @@ else
     ref_path="${SCRIPT_DIR}/reference/hg38/"
 fi
 
-### get intermediate f
-rm *tmp*
-echo "Preparing Files"
-# Process all sorts in parallel using pipes
-# Optional: Clear files beforehand to ensure they are fresh
-> "L_bkpt_${fn}.tmp"
-> "R_bkpt_${fn}.tmp"
-> "LR_bkpt_${fn}.tmp"
+mkdir -p ${fn}_tmp
+cd ${fn}_tmp
 
-awk -v fn="$fn" 'BEGIN { OFS="\t" }
-FNR > 1 {
-    uuid = $1 "_" $2 "_" $3 "_" $4 "_" $5 "_" $9
-    
-    # Keep these sorted as they are likely your join keys
+
+### get intermediate f
+echo
+echo "Preparing Files"
+awk -v fn="$fn" 'BEGIN { OFS="\t" } FNR > 1 { uuid = $1 "_" $2 "_" $3 "_" $4 "_" $5 "_" $9 # Keep these sorted as they are likely your join keys
     print uuid | "sort -u > uuid_" fn ".tmp"
     print uuid, $0 | "sort -k1,1 > 00_original_info_" fn ".tmp_join"
     
@@ -74,7 +68,6 @@ FNR > 1 {
     print $1, $4, $4, $6, $9, uuid > "R_bkpt_" fn ".tmp"
     print $1, $2, $4, $6, $9, uuid > "LR_bkpt_" fn ".tmp"
 }' "$i"
-echo 
 # echo
 # echo "Preparing Files" 
 # awk '{print $1"_"$2"_"$3"_"$4"_"$5"_"$9}' $i |sed 's/ /\t/g' | sort -k1,1 -k2,2n | grep -v pos > uuid_${fn}.tmp
@@ -200,3 +193,9 @@ echo "output file: $o"
 echo "reference path: ${ref_path}"
 
 rm *tmp*
+
+mv $o ../
+cd ../
+rmdir ${fn}_tmp
+
+exit
