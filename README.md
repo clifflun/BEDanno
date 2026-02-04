@@ -36,11 +36,6 @@ Input is a **tab-separated** file with a header row. The first 9 columns are use
 
 Additional columns are preserved through the pipeline. Rows after the header are treated as one variant per line. BND (breakend) rows are excluded from the main annotation.
 
-Example (see `test_hg19.tsv`, `test_hg38.tsv`):
-
-```
-chrom1	pos1	chrom2	pos2	SV_id	SV_type	SV_len	genotype	pt_id	...
-1	54719	1	54722	INS001SUR	INS	54	1-Jan	SEA101	...
 ```
 
 ## Usage
@@ -87,19 +82,6 @@ Exact column names and order are in `header_hg19.txt` and `header_hg38.txt`.
 4. **Join**: `mega_join.py` performs a series of left joins on UUID to merge all `.tmp_join` files into one table.
 5. **Finalize**: Prepend the appropriate header and write the result to `-o`.
 
-## Reference data
-
-Reference BED files live under:
-
-- `reference/hg19/` — hg19/GRCh37
-- `reference/hg38/` — hg38/GRCh38
-
-Each directory should contain (as produced by the pipeline’s logic):
-
-- `*_sorted.bed` (e.g. `OMIM_sorted.bed`, `RefSeq_sorted.bed`, `gnomad_*.bed`, `segdup_gap_sorted.bed`, etc.)
-- `dummy.bed` (used for sorting)
-
-The pipeline also expects type-specific gnomAD (and for hg38, TopMED) BEDs (e.g. `gnomad_DEL_sorted.bed`, `gnomad_DUP_sorted.bed`, …). You need to obtain or generate these BEDs and place them in the corresponding `reference/` subdirectory; they are not included in the repo.
 
 ## Files in this repo
 
@@ -109,9 +91,7 @@ The pipeline also expects type-specific gnomAD (and for hg38, TopMED) BEDs (e.g.
 | `mega_join.py` | Joins all annotation `.tmp_join` files by UUID |
 | `header_hg19.txt` | Output column header for hg19 |
 | `header_hg38.txt` | Output column header for hg38 |
-| `reference/hg19/`, `reference/hg38/` | Reference BED and support files |
-| `test_hg19.tsv`, `test_hg38.tsv` | Example input files |
-| `test_*_annotated.tsv` | Example outputs |
+
 
 ## Install Python dependency
 
